@@ -9,7 +9,6 @@ const createToken = (user) => {
     }, config.jwt_secret, {
         expiresIn: '15m'
     })
-
     return token;
 }
 

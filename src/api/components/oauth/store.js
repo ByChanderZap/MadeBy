@@ -10,13 +10,7 @@ const getUserByFilter = async (filter) => {
     return user;
 }
 
-const getEveryUser = async() => {
-    const users = await User.find();
-    return users;
-}
-
 module.exports = {
     createUser,
-    getEveryUser,
     getUserByFilter
 }

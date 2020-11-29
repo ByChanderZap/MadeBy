@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, maxlength: 220 },
     email: {
+        unique: true,
         type: String,
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },

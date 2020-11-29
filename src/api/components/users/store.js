@@ -2,7 +2,7 @@ const User = require('../../../db/models/users');
 
 const createUser = async (user) => {
     const myUser = new User(user);
-    return await myUser.save();
+    return myUser.save();
 }
 
 const getEveryUser = async() => {
@@ -15,9 +15,19 @@ const getUserByFilter = async (filter) => {
     return user;
 }
 
+const getOneById = async (id) => {
+    return await User.findById(id);
+}
+
+const deleteUser = async (id) => {
+    const deleted = await User.findByIdAndDelete(id);
+    return deleted;
+}
 
 module.exports = {
+    getOneById,
     createUser,
     getEveryUser,
-    getUserByFilter
+    getOneByFilter: getUserByFilter,
+    deleteUser
 }

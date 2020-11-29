@@ -13,9 +13,16 @@ const userSchema = new Schema({
     github_profile: String,
     twitter_username: String,
     bio: String,
-    login_tipe: String,
+    login_tipe: {
+        type: String,
+        default: "Local"
+    },
     location: String,
     github_id: String,
+    is_deleted: {
+        type: Boolean,
+        default: false
+    },
     is_verified: {
         type: Boolean,
         default: false

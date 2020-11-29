@@ -5,30 +5,57 @@ const validationHandler = require('../../../utils/middlewares/validationHandler'
 const upload = require('../../../utils/middlewares/uploadImage');
 const controller = require('./controller');
 
-router.get('/', (req, res, next) => {
+router.get('/', async (_, res, next) => {
     try {
+        const users = await controller.getEveryUser();
         res.status(200).json({
-            Message: "Hello!"
+            Message: "Here are every user :)",
+            users
         });
     } catch (error) {
         next(error);
     }
 })
 
-//  Example of req.body validation
-router.post('/signup', upload, validationHandler(createUserSchema), (req, res, next) => {
+router.get('/:id', validationHandler({id: userIdSchema}, "params"), async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const user = await controller.getOneUser(id);
+        res.status(200).json({
+            Message: "Success",
+            user
+        });
+    } catch (error) {
+        next(error);
+    }
+})
+
+router.post('/signup', upload, validationHandler(createUserSchema), async (req, res, next) => {
     const { file } = req;
 
     const { name, email, password, github_profile, twitter_username, bio, location } = req.body;
     
-    const data = controller.create(name, email, password, github_profile, twitter_username, bio, location, file)
     try {
+        controller.create(name, email, password, github_profile, twitter_username, bio, location, file);
         res.status(200).json({
-            data
+            Message: "User created successfully!"
         })
     } catch (error) {
         next(error);
     }
 })
+
+router.delete('/:id', validationHandler({id: userIdSchema}, "params"), async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        await controller.deleteUser(id);
+        res.status(200).json({
+            Message: "User deleted successfully",
+        });
+    } catch (error) {
+        next(error);
+    }
+})
+
 
 module.exports = router;

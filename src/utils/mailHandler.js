@@ -12,7 +12,7 @@ const send = async (mail, subject, content) => {
     });
 
     let mailOptions = {
-        from: "MadeBy",
+        from: "no-replay@madeby.com",
         to: mail,
         subject: subject,
         html: content

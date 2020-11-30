@@ -19,14 +19,6 @@ const userSchema = new Schema({
     },
     location: String,
     github_id: String,
-    is_deleted: {
-        type: Boolean,
-        default: false
-    },
-    is_verified: {
-        type: Boolean,
-        default: false
-    },
     is_admin: {
         type:Boolean,
         default: false

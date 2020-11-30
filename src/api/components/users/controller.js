@@ -1,9 +1,9 @@
-// eslint-disable-next-line no-unused-vars
 const store = require('./store');
 const upload = require('../../../utils/sendToS3');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const boom = require("@hapi/boom");
+const jwt = require("../../../utils/createJwt");
 
 const getEveryUser = async () => {
     const users = await store.getEveryUser();
@@ -42,6 +42,22 @@ const createUser = async (name, email, password, github_profile, twitter_usernam
     return store.createUser(newUser);
 }
 
+const login = async (email, password) => {
+    const user = await store.getOneByFilter({email: email});
+    if (!user) throw boom.badData('Email or password incorrect');
+    if (user.login_tipe !== 'Local') throw boom.illegal(`Your have to login with ${user.login_tipe} for more information contact with support team 😊`);
+
+    const passCorrect = await bcrypt.compare(password, user.password).catch(e => { throw boom.internal(e) })
+    if(!passCorrect) throw boom.badData('Email or password incorrect');
+
+    const token = jwt.createToken(user);
+    return token;
+}
+
+const update = async () => {
+
+}
+
 const deleteUser = async (id) => {
     await store.deleteUser(id);
     return
@@ -51,5 +67,7 @@ module.exports = {
     create: createUser,
     getEveryUser,
     deleteUser,
-    getOneUser
+    getOneUser,
+    login,
+    update
 }

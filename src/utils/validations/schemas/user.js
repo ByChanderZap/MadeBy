@@ -23,18 +23,24 @@ const createUserSchema = {
 };
 
 const updateUserSchema = {
-    name: name,
-    email: emailSchema,
+    name: name.required(),
+    email: emailSchema.required(),
     photo: photoSchema,
-    password: passwordSchema,
+    password: passwordSchema.required(),
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,
-    bio: bioSchema,
-    location: locationSchema,
+    bio: bioSchema.required(),
+    location: locationSchema.required(),
+}
+
+const loginSchema = {
+    email: emailSchema,
+    password: passwordSchema
 }
 
 module.exports = {
     userIdSchema, 
     createUserSchema,
     updateUserSchema,
+    loginSchema
 };

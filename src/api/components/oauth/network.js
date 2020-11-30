@@ -4,7 +4,6 @@ const { config } = require('../../../config/index');
 const controller = require('./controller');
 const generateRandomString = require('../../../utils/oauths/general');
 
-//  http://localhost:3000/api/auth/github
 router.get('/github', (req, res) => {
     const random = generateRandomString(24);
     const uri = `https://github.com/login/oauth/authorize?client_id=${config.github_client_id}&scope=user&state=${random}`

@@ -11,7 +11,7 @@ const step2 = async (client, secret, code, state) => {
         email: userData.email
     }
     const existsUser = await store.getUserByFilter(filterEmail);
-    if (existsUser && existsUser.login_tipe !== 'Github') {
+    if (existsUser && existsUser.login_type !== 'Github') {
         throw boom.badData('You must login with the normal login form!');
     }
     if (!existsUser) {

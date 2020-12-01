@@ -13,7 +13,7 @@ const userSchema = new Schema({
     github_profile: String,
     twitter_username: String,
     bio: String,
-    login_tipe: {
+    login_type: {
         type: String,
         default: "Local"
     },

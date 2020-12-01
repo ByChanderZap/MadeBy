@@ -4,6 +4,7 @@ const { createUserSchema, userIdSchema, updateUserSchema, loginSchema } = requir
 const validationHandler = require('../../../utils/middlewares/validationHandler');
 const upload = require('../../../utils/middlewares/uploadImage');
 const controller = require('./controller');
+const checkjwt = require('../../../utils/middlewares/auth/checkJwt');
 
 router.get('/', async (_, res, next) => {
     try {
@@ -59,15 +60,18 @@ router.post('/login', validationHandler(loginSchema), async (req, res, next) => 
     }
 })
 
-router.put('/:id', upload, validationHandler(loginSchema), async (req, res, next) => {
+router.put('/:id', upload, validationHandler(updateUserSchema), checkjwt, async (req, res, next) => {
     const { file } = req;
     const { id } = req.params;
     const { name, email, password, github_profile, twitter_username, bio, location } = req.body;
+    const { userData } = req;
 
     try {
-        await controller.update(id, name, email, password, github_profile, twitter_username, bio, location, file);
+        const updated = await controller.update(id, name, email, password, github_profile, twitter_username, bio, location, file, userData);
+
         res.status(200).json({
-            Message: "Welcome :)",
+            Message: "User updated",
+            user: updated
         })
     } catch (error) {
         next(error);

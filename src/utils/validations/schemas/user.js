@@ -26,7 +26,7 @@ const updateUserSchema = {
     name: name.required(),
     email: emailSchema.required(),
     photo: photoSchema,
-    password: passwordSchema.required(),
+    password: passwordSchema,
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,
     bio: bioSchema.required(),

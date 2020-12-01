@@ -1,7 +1,7 @@
 const { config } = require('../config/index');
 const { v4: uuid_v4 } = require('uuid');
 const AWS = require('aws-sdk');
-const bucketName = config.aws_bucket_name
+const bucketName = config.aws_bucket_name;
 
 const s3 = new AWS.S3({
     credentials: {

@@ -15,13 +15,15 @@ const getOneUser = async (id) => {
 }
 
 
-const createUser = async (name, email, password, github_profile, twitter_username, bio, location, file) => {
+const createUser = async (name, email, password, github_profile, twitter_username, bio, location, file, phone) => {
     const exists = await store.getOneByFilter({email: email});
     if(exists) throw boom.badData('Already exists an user with that email.');
     let imgUrl;
+    console.log(phone)
     let newUser = {
         name,
         email,
+        phone,
         github_profile,
         twitter_username,
         bio,
@@ -54,16 +56,20 @@ const login = async (email, password) => {
     return token;
 }
 
-const update = async (id, name, email, password, github_profile, twitter_username, bio, location, file, userDecoded) => {
+const update = async (id, name, email, password, github_profile, twitter_username, bio, location, file, userDecoded, phone) => {
     if(userDecoded.sub != id && !userDecoded.is_admin) throw boom.unauthorized('You dont have the permisions to do that.');
     let imgUrl;
     let update = {
         name,
         email,
+        phone,
         github_profile,
         twitter_username,
         bio,
         location,
+    }
+    for(let prop in update) {  // we will only update the values that actually have something
+        if(!update[prop]) delete update[prop];
     }
     if(password) {
         const hashedPassword = await new Promise((resolve, reject) => {

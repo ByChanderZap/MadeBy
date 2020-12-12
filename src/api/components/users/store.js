@@ -1,5 +1,5 @@
 const User = require('../../../db/models/users');
-const baseSelect = 'name email photo github_profile twitter_username bio location is_admin login_type';
+const baseSelect = 'name email phone photo github_profile twitter_username bio location is_admin login_type';
 
 const createUser = async (user) => {
     const myUser = new User(user);

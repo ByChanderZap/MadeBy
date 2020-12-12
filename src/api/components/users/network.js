@@ -34,10 +34,10 @@ router.get('/:id', validationHandler({ id: userIdSchema }, "params"), async (req
 router.post('/signup', upload, validationHandler(createUserSchema), async (req, res, next) => {
     const { file } = req;
 
-    const { name, email, password, github_profile, twitter_username, bio, location } = req.body;
+    const { name, email, password, github_profile, twitter_username, bio, location, phone } = req.body;
 
     try {
-        await controller.create(name, email, password, github_profile, twitter_username, bio, location, file);
+        await controller.create(name, email, password, github_profile, twitter_username, bio, location, file, phone);
         res.status(200).json({
             Message: "User created successfully!"
         })
@@ -63,15 +63,14 @@ router.post('/login', validationHandler(loginSchema), async (req, res, next) => 
 router.put('/:id', upload, validationHandler(updateUserSchema), checkjwt, async (req, res, next) => {
     const { file } = req;
     const { id } = req.params;
-    const { name, email, password, github_profile, twitter_username, bio, location } = req.body;
+    const { name, email, password, github_profile, twitter_username, bio, location, phone } = req.body;
     const { userData } = req;
 
     try {
-        const updated = await controller.update(id, name, email, password, github_profile, twitter_username, bio, location, file, userData);
+        await controller.update(id, name, email, password, github_profile, twitter_username, bio, location, file, userData, phone);
 
         res.status(200).json({
-            Message: "User updated",
-            user: updated
+            Message: "User updated successfully",
         })
     } catch (error) {
         next(error);

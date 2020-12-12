@@ -10,6 +10,7 @@ const userSchema = new Schema({
     },
     photo: String,
     password: String,
+    phone: String,
     github_profile: String,
     twitter_username: String,
     bio: String,

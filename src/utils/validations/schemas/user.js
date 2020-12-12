@@ -9,12 +9,13 @@ const github_profileSchema = joi.string().uri().message('Github profile must be 
 const twitter_usernameSchema = joi.string().min(2).max(80);
 const bioSchema = joi.string().min(5).max(220);
 const locationSchema = joi.string().min(5).max(60);
-
+const phoneSchema = joi.string().min(8).max(20).regex(/^\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})$/).message('Invalid phone format.')
 
 const createUserSchema = {
     name: name.required(),
     email: emailSchema.required(),
     photo: photoSchema,
+    phone: phoneSchema.required(),
     password: passwordSchema.required(),
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,
@@ -26,6 +27,7 @@ const updateUserSchema = {
     name: name.required(),
     email: emailSchema.required(),
     photo: photoSchema,
+    phone: phoneSchema,
     password: passwordSchema,
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,

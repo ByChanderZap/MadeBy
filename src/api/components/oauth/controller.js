@@ -23,12 +23,11 @@ const step2 = async (client, secret, code, state) => {
             github_profile: userData.html_url,
             twitter_username: userData.twitter_username,
             bio,
-            login_tipe: 'Github',
+            login_type: 'Github',
             location: userData.location,
             github_id: userData.id,
             is_verified: true,
         }
-
         const addedUser = await store.createUser(newUser);
         return addedUser;
     } else {

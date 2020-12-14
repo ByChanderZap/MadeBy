@@ -77,10 +77,10 @@ router.put('/:id', upload, validationHandler(updateUserSchema), checkjwt, async 
     }
 })
 
-router.delete('/:id', validationHandler({ id: userIdSchema }, "params"), async (req, res, next) => {
+router.delete('/:id', validationHandler({ id: userIdSchema }, "params"), checkjwt, async (req, res, next) => {
     const { id } = req.params;
     try {
-        await controller.deleteUser(id);
+        await controller.deleteUser(id, req.userData);
         res.status(200).json({
             Message: "User deleted successfully",
         });

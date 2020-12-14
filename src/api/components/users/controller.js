@@ -87,7 +87,8 @@ const update = async (id, name, email, password, github_profile, twitter_usernam
     return store.updateUser(id, update);
 }
 
-const deleteUser = async (id) => {
+const deleteUser = async (id, userData) => {
+    if(id != userData.sub) throw boom.unauthorized('You cant do that!');
     return await store.deleteUser(id);
 }
 

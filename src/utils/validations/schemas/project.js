@@ -23,6 +23,7 @@ const editProjectSchema = {
     technologies: technologiesSchema,
     rol: rolSchema,
     repository: repositorySchema,
+    url: urlSchema,
 }
 
 module.exports = {

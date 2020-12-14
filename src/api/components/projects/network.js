@@ -24,7 +24,7 @@ router.post('/', validationHandler(createProjectSchema), checkjwt, async (req, r
     const { userData } = req;
     try {
         const created = await controller.saveProject(title, description, technologies, rol, repository, url, userData);
-        res.status(200).json({
+        res.status(201).json({
             message: "ok",
             project: created
         })
@@ -33,7 +33,7 @@ router.post('/', validationHandler(createProjectSchema), checkjwt, async (req, r
     }
 });
 
-router.delete('/:id', validationHandler({id: projectIdSchema}), checkjwt, async (req, res, next) => {
+router.delete('/:id', validationHandler({id: projectIdSchema}, 'params'), checkjwt, async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = await controller.deleteOne(id, req.userData);
@@ -44,6 +44,36 @@ router.delete('/:id', validationHandler({id: projectIdSchema}), checkjwt, async 
     } catch (error) {
         next(error);
     }
-})
+});
+
+router.put('/:id', validationHandler({id: projectIdSchema}, 'params'), validationHandler(editProjectSchema), checkjwt, async (req, res, next) => {
+    
+    const { id } = req.params;
+    const { title, description, technologies, rol, repository, url } = req.body;
+
+    try {
+        const updated = await controller.updateProject(id, title, description, technologies, rol, repository, url, req.userData);
+
+        res.status(200).json({
+            message: 'Update success.',
+            project: updated
+        })
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get('/user/:id', validationHandler({id: projectIdSchema}, 'params'), async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const projects = await controller.getProjectsOf(id);
+        res.status(200).json({
+            message:'Your projects.',
+            projects
+        })
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;

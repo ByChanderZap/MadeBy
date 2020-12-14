@@ -19,7 +19,6 @@ const createUser = async (name, email, password, github_profile, twitter_usernam
     const exists = await store.getOneByFilter({email: email});
     if(exists) throw boom.badData('Already exists an user with that email.');
     let imgUrl;
-    console.log(phone)
     let newUser = {
         name,
         email,

@@ -1,4 +1,6 @@
 const store = require('./store');
+const boom = require('@hapi/boom');
+
 
 const getOneById = async (id) => {
     const filter = {
@@ -21,7 +23,16 @@ const saveProject = (title, description, technologies, rol, repository, url, use
     return store.addProject(project);
 }
 
+const deleteOne = async (id, userData) => {
+    const project = await store.getOneById({_id: id});
+    console.log(userData.sub, project.user['_id']);
+    if(userData.sub != project.user['_id']) throw boom.unauthorized('You are not authorized to do that action.');
+
+    return store.deleteOne(id);
+}
+
 module.exports = {
     saveProject,
-    getOneById
+    getOneById,
+    deleteOne
 }

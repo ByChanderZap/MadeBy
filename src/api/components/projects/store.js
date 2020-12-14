@@ -11,7 +11,12 @@ const getOneById = async (filter) => {
     return project;
 }
 
+const deleteOne = async (id) => {
+    return Project.findByIdAndDelete(id);
+}
+
 module.exports = {
     addProject,
-    getOneById
+    getOneById,
+    deleteOne
 }

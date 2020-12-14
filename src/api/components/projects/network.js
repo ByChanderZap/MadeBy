@@ -20,7 +20,6 @@ router.get('/:id', validationHandler({id: projectIdSchema}, 'params'), async (re
 });
 
 router.post('/', validationHandler(createProjectSchema), checkjwt, async (req, res, next) => {
-    
     const { title, description, technologies, rol, repository, url } = req.body;
     const { userData } = req;
     try {
@@ -28,6 +27,19 @@ router.post('/', validationHandler(createProjectSchema), checkjwt, async (req, r
         res.status(200).json({
             message: "ok",
             project: created
+        })
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete('/:id', validationHandler({id: projectIdSchema}), checkjwt, async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const data = await controller.deleteOne(id, req.userData);
+        console.log(data)
+        res.status(200).json({
+            message:"Deleted success"
         })
     } catch (error) {
         next(error);

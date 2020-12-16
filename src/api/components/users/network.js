@@ -38,7 +38,7 @@ router.post('/signup', upload, validationHandler(createUserSchema), async (req, 
 
     try {
         await controller.create(name, email, password, github_profile, twitter_username, bio, location, file, phone);
-        res.status(200).json({
+        res.status(201).json({
             Message: "User created successfully!"
         })
     } catch (error) {

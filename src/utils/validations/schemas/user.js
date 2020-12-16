@@ -3,7 +3,7 @@ const joi = require('joi');
 const userIdSchema = joi.string().regex(/^[0-9a-fA-F]{24}$/);
 const name = joi.string().max(80).regex(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/).message('That doesnt looks like a name, if you think its an error please contact with an administrator.');
 const emailSchema = joi.string().max(80).regex(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).message('That doesnt looks like a valid email');
-const passwordSchema = joi.string().min(8).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).message('Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number');
+const passwordSchema = joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/).message('Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character');
 const photoSchema = joi.any();
 const github_profileSchema = joi.string().uri().message('Github profile must be a valid link to your profile!');
 const twitter_usernameSchema = joi.string().min(2).max(80);
@@ -15,24 +15,24 @@ const createUserSchema = {
     name: name.required(),
     email: emailSchema.required(),
     photo: photoSchema,
-    phone: phoneSchema.required(),
+    phone: phoneSchema,
     password: passwordSchema.required(),
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,
-    bio: bioSchema.required(),
-    location: locationSchema.required(),
+    bio: bioSchema,
+    location: locationSchema,
 };
 
 const updateUserSchema = {
-    name: name.required(),
-    email: emailSchema.required(),
+    name: name,
+    email: emailSchema,
     photo: photoSchema,
     phone: phoneSchema,
     password: passwordSchema,
     github_profile: github_profileSchema,
     twitter_username: twitter_usernameSchema,
-    bio: bioSchema.required(),
-    location: locationSchema.required(),
+    bio: bioSchema,
+    location: locationSchema,
 }
 
 const loginSchema = {

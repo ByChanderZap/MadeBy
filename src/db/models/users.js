@@ -10,15 +10,24 @@ const userSchema = new Schema({
     },
     photo: String,
     password: String,
-    phone: String,
-    github_profile: String,
+    phone: {
+        type: String,
+        default: ''
+    },
+    github_profile: {
+        type: String,
+        default: ''
+    },
     twitter_username: String,
     bio: String,
     login_type: {
         type: String,
         default: "Local"
     },
-    location: String,
+    location: {
+        type: String,
+        default: ''
+    },
     github_id: String,
     is_admin: {
         type:Boolean,

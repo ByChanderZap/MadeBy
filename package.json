@@ -20,7 +20,7 @@
   "homepage": "https://github.com/ByChanderZap/Express-MongoAPI-BoilerTemplate#readme",
   "dependencies": {
     "@hapi/boom": "^9.1.0",
-    "aws-sdk": "^2.799.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
